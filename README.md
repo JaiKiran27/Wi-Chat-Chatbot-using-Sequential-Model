@@ -165,3 +165,139 @@ print(classification_report(y_test, y_pred, labels=unique_labels, target_names=[
 - **Evaluation**: The model's performance is evaluated using accuracy and a classification report. 
 
 This setup allows the chatbot to learn from a relatively small dataset, generalize well, and avoid overfitting.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+This code creates a simple chatbot application using `tkinter` for the GUI and TensorFlow/Keras for natural language processing. Here's a detailed explanation of each part:
+
+### 1. **Imports and Setup**
+```python
+import tkinter as tk
+from tkinter import scrolledtext
+import spacy
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import load_model
+import pickle
+import json
+import random
+```
+- **`tkinter`**: Used for creating the GUI.
+- **`spacy`**: For natural language processing (NLP) to tokenize sentences.
+- **`numpy`**: For handling arrays and numerical operations.
+- **`tensorflow`** and **`tensorflow.keras`**: For loading and using a pre-trained model.
+- **`pickle`**: For loading Python objects saved to disk.
+- **`json`**: For handling JSON data.
+- **`random`**: For selecting random responses from a list.
+
+### 2. **Load SpaCy Model**
+```python
+try:
+    nlp = spacy.load("en_core_web_sm")
+except Exception as e:
+    print(f"Error loading spaCy model: {e}")
+```
+- Loads the spaCy model for tokenizing input text. If there is an error, it prints an error message.
+
+### 3. **Load Intents, Model, and Data**
+```python
+intents_path = r'C:\Users\Asus\OneDrive\Desktop\Chatbot\intents.json'
+try:
+    with open(intents_path) as file:
+        intents = json.load(file)
+except Exception as e:
+    print(f"Error loading intents file: {e}")
+
+model_path = r'C:\Users\Asus\OneDrive\Desktop\Chatbot\chatbot_model.keras'
+try:
+    model = load_model(model_path)
+except Exception as e:
+    print(f"Error loading model: {e}")
+
+classes_path = r'C:\Users\Asus\OneDrive\Desktop\Chatbot\classes.pkl'
+try:
+    with open(classes_path, 'rb') as f:
+        classes = pickle.load(f)
+except Exception as e:
+    print(f"Error loading classes file: {e}")
+
+words_path = r'C:\Users\Asus\OneDrive\Desktop\Chatbot\words.pkl'
+try:
+    with open(words_path, 'rb') as f:
+        words = pickle.load(f)
+except Exception as e:
+    print(f"Error loading words file: {e}")
+```
+- **`intents.json`**: Contains the intents and corresponding responses.
+- **`chatbot_model.keras`**: The pre-trained model used for predicting responses.
+- **`classes.pkl`**: Contains class labels for different intents.
+- **`words.pkl`**: Contains the vocabulary used for tokenization and bag-of-words representation.
+
+### 4. **Tokenization and Prediction Functions**
+```python
+def tokenize(sentence):
+    doc = nlp(sentence)
+    return [token.text.lower() for token in doc]
+
+def predict_class(sentence):
+    tokens = tokenize(sentence)
+    bag_of_words = [1 if w in tokens else 0 for w in words]
+    prediction = model.predict(np.array([bag_of_words]))[0]
+    max_index = np.argmax(prediction)
+    return classes[max_index]
+
+def chatbot_response(message):
+    tag = predict_class(message)
+    for intent in intents['intents']:
+        if intent['tag'] == tag:
+            response = random.choice(intent['responses'])
+            if "not resolved" in message.lower():
+                response += "\nIf the issue persists, please contact support at wifive12345@gmail.com."
+            return response
+    return "Sorry, I didn't understand that. Please try again or contact support at wifive12345@gmail.com."
+```
+- **`tokenize`**: Converts a sentence into a list of lowercase tokens using spaCy.
+- **`predict_class`**: Converts tokens into a bag-of-words representation and uses the model to predict the class (intent) of the sentence.
+- **`chatbot_response`**: Uses the predicted intent to fetch a response from the intents data. It also provides a contact support message if the user indicates their issue isn’t resolved.
+
+### 5. **Tkinter GUI Setup**
+```python
+def send_message(event=None):
+    user_message = entry.get()
+    if user_message:
+        chat_log.config(state=tk.NORMAL)
+        chat_log.insert(tk.END, "User: " + user_message + '\n', 'user')
+        response = chatbot_response(user_message)
+        chat_log.insert(tk.END, "Wi-Chat: " + response + '\n', 'bot')
+        chat_log.config(state=tk.DISABLED)
+        entry.delete(0, tk.END)
+        chat_log.yview(tk.END)  # Auto-scroll to the bottom
+
+root = tk.Tk()
+root.title("Wi-Five Chatbot")
+root.configure(bg="#000000")  # Set background color to black
+
+chat_log = scrolledtext.ScrolledText(root, state=tk.DISABLED, wrap=tk.WORD, bg="#1a1a1a", fg="#FFFFFF", font=("Helvetica", 14))
+chat_log.tag_configure('user', foreground='#FF6347')  # Tomato color for user text
+chat_log.tag_configure('bot', foreground='#7FFF00')  # Chartreuse color for Wi-Chat text
+chat_log.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+
+entry = tk.Entry(root, font=("Helvetica", 14), bg="#1a1a1a", fg="#FFFFFF", insertbackground="#FFFFFF")
+entry.pack(padx=10, pady=10, fill=tk.X, expand=True)
+
+send_button = tk.Button(root, text="Send", command=send_message, font=("Helvetica", 14), bg="#FF4500", fg="#FFFFFF", relief=tk.RAISED)
+send_button.pack(padx=10, pady=10, side=tk.RIGHT)
+
+root.bind('<Return>', send_message)
+
+root.mainloop()
+```
+- **`send_message`**: Handles sending the user message and displaying the chatbot’s response in the chat log. It also auto-scrolls to the bottom of the chat log.
+- **`root`**: Main window for the GUI. 
+- **`chat_log`**: Displays the conversation between the user and the chatbot.
+- **`entry`**: Input field for the user to type their message.
+- **`send_button`**: Button to send the message.
+- **`root.bind('<Return>', send_message)`**: Allows sending the message by pressing the Enter key.
+- **`root.mainloop()`**: Starts the Tkinter event loop to display the window.
+
+This code sets up a basic chatbot interface where users can type messages, receive responses, and see the conversation history.
