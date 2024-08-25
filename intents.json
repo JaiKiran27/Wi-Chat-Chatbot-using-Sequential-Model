@@ -1,0 +1,145 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hello",
+        "Hi",
+        "Hey"
+      ],
+      "responses": [
+        "Hi there! How can I assist you today?",
+        "Hello! What can I help you with?",
+        "Hey! What can I do for you?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye",
+        "Goodbye",
+        "See you later"
+      ],
+      "responses": [
+        "Goodbye! Feel free to reach out if you need more help.",
+        "Catch you later! If you need more assistance, let us know."
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thanks",
+        "Thank you"
+      ],
+      "responses": [
+        "You’re welcome! Let me know if there’s anything else I can do.",
+        "No problem! Happy to assist.",
+        "Anytime! Feel free to ask if you need more help.",
+        "Glad I could help! If you need anything else, just ask.",
+        "You’re welcome! If you have more questions, I’m here."
+      ]
+    },
+    {
+      "tag": "network_issue",
+      "patterns": [
+        "My internet is slow",
+        "Wi-Fi not working",
+        "No internet connection",
+        "Connection keeps dropping",
+        "Internet is down",
+        "Wi-Fi problems",
+        "Network issues"
+      ],
+      "responses": [
+        "Apologies for the inconvenience. The signal is low in your location.",
+        "Ensure that all cables are securely connected and try rebooting your router.",
+        "Sorry to hear that our connection keeps dropping, try moving closer to your router."
+      ]
+    },
+    {
+      "tag": "vpn_issue",
+      "patterns": [
+        "VPN isn't connecting",
+        "VPN keeps disconnecting",
+        "My VPN is slow",
+        "Unable to connect to VPN",
+        "VPN issues",
+        "VPN not working"
+      ],
+      "responses": [
+        "Try disconnecting and reconnecting your VPN or switching to a different server.",
+        "Ensure your internet connection is stable and try reconnecting your VPN.",
+        "You might want to check if the VPN software needs an update.",
+        "If you’re having issues, restarting your device might help."
+      ]
+    },
+    {
+      "tag": "dth_issue",
+      "patterns": [
+        "DTH isn't working",
+        "No signal on my DTH",
+        "Can't access channels",
+        "DTH issues",
+        "DTH connection problems",
+        "DTH signal loss"
+      ],
+      "responses": [
+        "Try rebooting your DTH box and check the dish alignment.",
+        "Ensure your dish is properly aligned and try restarting the DTH receiver.",
+        "Check the connections between your DTH box and TV.",
+        "If the issue persists, contact customer support wifive12345@gmail.com for assistance."
+      ]
+    },
+    {
+      "tag": "product_info",
+      "patterns": [
+        "Tell me about your plans",
+        "What services do you offer?",
+        "What are your internet plans?",
+        "What are your OTT plans?",
+        "Tell me about your products",
+        "Product information",
+        "Service details"
+      ],
+      "responses": [
+        "We offer a range of services including Wi-Fi, SIM cards, DTH, VPN, and OTT streaming. Our Wi-Fi plans start at ₹399 for 30Mbps with unlimited data.",
+        "Our SIM card plans start at ₹149 with 1.5GB/day, unlimited calls, and 100 SMS/day for 24 days.",
+        "We have various OTT streaming options and DTH plans. For detailed information, visit our website or contact us.",
+        "Our product offerings include high-speed internet, SIM cards with data and calls, and more. Let us know if you need specifics on any of these."
+      ]
+    },
+    {
+      "tag": "wifi_issue",
+      "patterns": [
+        "Wi-Fi is not connecting",
+        "Wi-Fi is too slow",
+        "Wi-Fi keeps disconnecting",
+        "Problems with Wi-Fi",
+        "Wi-Fi connection issues",
+        "Wi-Fi network problems"
+      ],
+      "responses": [
+        "Try restarting your router or moving closer to it.",
+        "Ensure your router is powered on and properly connected to your internet service.",
+        "You might want to check if there are any firmware updates available for your router.",
+        "If your Wi-Fi is too slow, try rebooting your router and checking for interference."
+      ]
+    },
+    {
+      "tag": "sim_issue",
+      "patterns": [
+        "SIM is not working",
+        "SIM card is not recognized",
+        "Can't make calls or send messages",
+        "SIM card problems",
+        "Issues with SIM card",
+        "SIM not functioning"
+      ],
+      "responses": [
+        "Check if the SIM card is inserted correctly and try restarting your phone.",
+        "You may need to contact your service provider if the issue persists.",
+        "Try removing and reinserting the SIM card and see if it resolves the issue."
+      ]
+    }
+  ]
+}
